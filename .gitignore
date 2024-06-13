@@ -1,0 +1,7 @@
+# Develop tools
+.vscode
+.idea/
+
+# Go workspace file
+go.work
+go.work.sum

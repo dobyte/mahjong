@@ -196,7 +196,13 @@ mahjong.CircleWindWest  mahjong.CircleWind = 3 // 西风圈
 mahjong.CircleWindNorth mahjong.CircleWind = 4 // 北风圈
 ```
 
-### 三、API
+### 三、示例
+
+
+
+
+
+### 四、API
 
 #### 1.牌
 
