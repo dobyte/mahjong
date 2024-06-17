@@ -23,7 +23,7 @@
 - 支持流局轮庄模式定制
 - 支持自动补花
 
-### 一、基础牌型
+### 二、牌型
 
 #### 1.万牌（36张）
 
@@ -97,7 +97,7 @@ mahjong.FlowersChrysanthemum mahjong.Card = 47 // 菊
 mahjong.FlowersBamboo        mahjong.Card = 48 // 竹
 ```
 
-### 二、特殊术语
+### 三、术语
 
 #### 1.序牌（108张）
 
@@ -221,11 +221,100 @@ mahjong.CircleWindWest  mahjong.CircleWind = 3 // 西风圈
 mahjong.CircleWindNorth mahjong.CircleWind = 4 // 北风圈
 ```
 
-### 三、示例
+#### 7.门风
+
+###### 1.东风位
+
+```text
+mahjong.WindsEast            mahjong.Card = 31 // 东
+```
+
+###### 2.南风位
+
+```text
+mahjong.WindsSouth           mahjong.Card = 32 // 南
+```
+
+###### 3.西风位
+
+```text
+mahjong.WindsWest            mahjong.Card = 33 // 西
+```
+
+###### 4.北风位
+
+```text
+mahjong.WindsNorth           mahjong.Card = 34 // 北
+```
+
+#### 8.门花
+
+###### 1.东风位
+
+```text
+mahjong.FlowersSpring        mahjong.Card = 41 // 春
+mahjong.FlowersPlum          mahjong.Card = 45 // 梅
+```
+
+###### 2.南风位
+
+```text
+mahjong.FlowersSummer        mahjong.Card = 42 // 夏
+mahjong.FlowersOrchid        mahjong.Card = 46 // 兰
+```
+
+###### 3.西风位
+
+```text
+mahjong.FlowersAutumn        mahjong.Card = 43 // 秋
+mahjong.FlowersChrysanthemum mahjong.Card = 47 // 菊
+```
+
+###### 4.北风位
+
+```text
+mahjong.FlowersWinter        mahjong.Card = 44 // 冬
+mahjong.FlowersBamboo        mahjong.Card = 48 // 竹
+```
+
+#### 9.八花会
+
+```text
+mahjong.FlowersSpring        mahjong.Card = 41 // 春
+mahjong.FlowersSummer        mahjong.Card = 42 // 夏
+mahjong.FlowersAutumn        mahjong.Card = 43 // 秋
+mahjong.FlowersWinter        mahjong.Card = 44 // 冬
+mahjong.FlowersPlum          mahjong.Card = 45 // 梅
+mahjong.FlowersOrchid        mahjong.Card = 46 // 兰
+mahjong.FlowersChrysanthemum mahjong.Card = 47 // 菊
+mahjong.FlowersBamboo        mahjong.Card = 48 // 竹
+```
+
+#### 10.四花会
+
+###### 1.上四花
+
+```text
+mahjong.FlowersSpring        mahjong.Card = 41 // 春
+mahjong.FlowersSummer        mahjong.Card = 42 // 夏
+mahjong.FlowersAutumn        mahjong.Card = 43 // 秋
+mahjong.FlowersWinter        mahjong.Card = 44 // 冬
+```
+
+###### 2.下四花
+
+```text
+mahjong.FlowersPlum          mahjong.Card = 45 // 梅
+mahjong.FlowersOrchid        mahjong.Card = 46 // 兰
+mahjong.FlowersChrysanthemum mahjong.Card = 47 // 菊
+mahjong.FlowersBamboo        mahjong.Card = 48 // 竹
+```
+
+### 四、示例
 
 详细实例：[example](./example)
 
-### 四、API
+### 五、API
 
 #### 1.牌
 
@@ -804,4 +893,143 @@ func (s *Seat) NextNonWinSeat(n ...int) *Seat
 
 // PrevNonWinSeat 上n个非胡座位
 func (s *Seat) PrevNonWinSeat(n ...int) *Seat
+
+// IsPureOneSuit 是否是清一色
+func (s *Seat) IsPureOneSuit() bool
+
+// IsHonorOneSuit 是否是字一色
+func (s *Seat) IsHonorOneSuit() bool
+
+// IsMixedOneSuit 是否是混一色
+func (s *Seat) IsMixedOneSuit() bool
+
+// IsSevenPairs 是否是七对儿
+func (s *Seat) IsSevenPairs() bool
+
+// IsAllTriplets 是否是对对胡
+func (s *Seat) IsAllTriplets() bool
+```
+
+#### 9.暗张
+
+- 文件：hide_cards.go
+- 类库：HideCards
+
+```text
+// AllTiles 获取所有手牌数据
+func (h *HideCards) AllTiles(isLastNotSorted ...bool) Tiles
+
+// AllSuits 获取所有花色数据
+func (h *HideCards) AllSuits() map[Suit]map[Card]int
+
+// AllFlowers 获取所有花牌
+func (h *HideCards) AllFlowers() Tiles
+
+// LastTile 最后一张牌
+func (h *HideCards) LastTile() Card
+
+// Add 添加手牌
+func (h *HideCards) Add(tiles ...Card) (normals, flowers Tiles)
+
+// Remove 移除手牌
+func (h *HideCards) Remove(cards ...Card) (n int)
+
+// Has 是否存在某张牌
+func (h *HideCards) Has(card Card) bool
+
+// Count 统计牌数
+func (h *HideCards) Count(card ...Card) int
+
+// AnalyzeTingList 分析听牌列表
+func (h *HideCards) AnalyzeTingList() []*TingResult
+
+// AnalyzePlayTingList 分析打牌听牌列表（打x牌听m,n,y牌）
+func (h *HideCards) AnalyzePlayTingList() []*PlayTingResult
+
+// CanChowLeft 检测是否可以吃左边牌
+func (h *HideCards) CanChowLeft(card Card) (bool, []Card)
+
+// CanChowMiddle 检测是否可以吃中间牌
+func (h *HideCards) CanChowMiddle(card Card) (bool, []Card)
+
+// CanChowRight 检测是否可以吃右边牌
+func (h *HideCards) CanChowRight(card Card) (bool, []Card)
+
+// CanPong 检测该牌是否可以碰
+func (h *HideCards) CanPong(card Card) bool
+
+// CanKongHide 检测是否允许暗杠（被杠的牌一定要是自己的牌）
+func (h *HideCards) CanKongHide(card Card) bool
+
+// CanKongShow 检测是否允许明杠
+func (h *HideCards) CanKongShow(card Card) bool
+
+// CanNaturalKongHide 是否可以直接暗杠（用于手牌中已存在暗杠的情况）
+func (h *HideCards) CanNaturalKongHide() (bool, []Card)
+
+// CanWin 检测是否可以胡牌
+func (h *HideCards) CanWin(card Card, filters ...Card) bool
+
+// CanWinSevenPairs 检测是否可以胡七对
+func (h *HideCards) CanWinSevenPairs(card Card, filters ...Card) bool
+
+// CanNaturalWin 检测是否可以直接胡
+func (h *HideCards) CanNaturalWin(filters ...Card) bool
+
+// CanNaturalWinSevenPairs 检测是否可以直接胡七对
+func (h *HideCards) CanNaturalWinSevenPairs(filters ...Card) bool
+
+// CanTing 检测是否可以听牌
+func (h *HideCards) CanTing(filters ...Card) (bool, []Card)
+
+// IsAllSameSuit 是否所有牌同一花色
+func (h *HideCards) IsAllSameSuit() (Suit, bool)
+
+// IsSevenPairs 是否是七对儿
+func (h *HideCards) IsSevenPairs() bool
+
+// IsAllTriplets 是否是全是刻子
+func (h *HideCards) IsAllTriplets() bool
+```
+
+#### 10.显张
+
+- 文件：show_cards.go
+- 类库：ShowCards
+
+```text
+// AllTiles 所有显张
+func (s *ShowCards) AllTiles() []*ShowTile
+
+// AllFlowers 所有花牌
+func (s *ShowCards) AllFlowers() Tiles
+
+// Count 统计显张的张数
+func (s *ShowCards) Count(card ...Card) int
+
+// IsAllSameSuit 是否所有牌同一花色
+func (s *ShowCards) IsAllSameSuit() (bool, Suit)
+
+// IsAllTriplets 是否是全是刻子
+func (s *ShowCards) IsAllTriplets() bool
+
+// HasEightFlowers 是否有八花汇
+func (s *ShowCards) HasEightFlowers() bool
+
+// HasFourFlowers 是否有四花汇
+func (s *ShowCards) HasFourFlowers() (bool, FourFlowers)
+```
+
+#### 11.打张
+
+- 文件：play_cards.go
+- 类库：PlayCards
+
+```text
+// AllTiles 所有显张
+func (p *PlayCards) AllTiles() []*ShowTile
+
+
+// Count 统计打出的牌张数
+func (p *PlayCards) Count(card ...Card) int
 ```
